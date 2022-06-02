@@ -1,4 +1,4 @@
-pipeline {
+eline {
   agent any
   parameters {
     choice(
@@ -7,11 +7,10 @@ pipeline {
       description: 'Passing the Environment'
     )
   }
-
   stages {
       stage('GIT_Clone') {
         steps {
-        checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/CodvaTech-Labs/terraform-course.git']]]
+        checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/patil9009/git-demo-lms09.git']]]
            }
         }
         stage('Terraform_Setup') {
@@ -20,23 +19,18 @@ pipeline {
                     if (params.Env == "Create") {
                        sh '''
                        echo "terraform create is in progress"
-                       cd terraform_backend_demo
                        ls
                        terraform init -input=false
-                       terraform apply --auto-approve -input=false
+                       terraform apply --auto-approve -input=false -lock=false
                        '''
-                        
                     } else {
                        sh '''
                        echo "terraform destory is in progress"
-                       cd terraform_backend_demo
                        terraform init -input=false
-                       terraform destroy --auto-approve -input=false
-                       '''                
+                       terraform destroy --auto-approve -input=false -lock=false
+                       '''
                     }
                 }
             }
         }
-    
   }
-}
