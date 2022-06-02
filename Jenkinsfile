@@ -13,10 +13,11 @@ pipeline {
       }
     }
      
-    stage('Deploy') {
+    stage('Monitor') {
       steps {
-        echo 'I am in Deploy Phase'
+        echo 'I am in monitor Phase'
       }
     }
   }
  }
+ 
